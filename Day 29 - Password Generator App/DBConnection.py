@@ -18,3 +18,20 @@ def insert_data_into_DB(db_connection, values):
         cursor = db_connection.cursor()
         cursor.execute(sql, values)
         db_connection.commit()
+
+def fetch_data_from_DB(db_connection, txt_to_search):
+    with db_connection:
+        cursor = db_connection.cursor()
+        cursor.execute("""SELECT * 
+                          FROM PASSWORDS
+                          WHERE WEBSITE LIKE """ + f"'%{txt_to_search}%'")
+
+        return cursor.fetchall()
+
+def delete_data_from_DB(db_connection, row_id):
+    sql ='''DELETE FROM PASSWORDS
+            WHERE ID=(?)'''
+    with db_connection:
+        cursor = db_connection.cursor()
+        cursor.execute(sql, row_id)
+        db_connection.commit()
