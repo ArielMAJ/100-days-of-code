@@ -37,6 +37,14 @@ Later on "Day 30" the teacher proposes using JSON files to store them and propos
 
 </details>
 
-## Days 31~XX: Intermediate+ projects (TBA)
+
+<details>
+<summary><a href="https://github.com/ArielMAJ/100-days-of-code/tree/master/Day%2029%20-%20Password%20Generator%20App" target="_blank">Day 31 - Flashcards App</a></summary>
+
+From this project onward I started incorporating a little bit of the knowledge I acquired from CS50P: black and pylint was extensively used and followed, etc. I also changed from tkinter to customtkinter. 
+
+</details>
+
+## Days 32~XX: Intermediate+ projects (TBA)
 
 TBA.
