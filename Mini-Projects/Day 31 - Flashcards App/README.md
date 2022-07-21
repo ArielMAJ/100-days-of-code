@@ -19,3 +19,6 @@ To stop reviewing, simply close the app.
 ### Etc:
 
 custom_card.py was an attempt of making a customtkinter frame with a shadow. I ended up choosing to use the png image provided by the assignment.
+
+Button icons: https://www.flaticon.com/br/packs/arrow-54.
+Front and back flash cards: Provided by the teacher.
