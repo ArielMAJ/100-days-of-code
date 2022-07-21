@@ -6,9 +6,13 @@ This mini-project has the basics for automated mailing.
 
 This script will check in an CSV if there's someone having a birthday today. If anyone is found, it will randomly choose letters and mail to those people.
 
+Letter templates provided by course teacher.
+
 ## Motivational Quotes.
 
 This script will randomly choose quotes in a csv and mail them to e-mails in "mail_list.txt". It is possible to make it verify if it is a specific day of the week first before mailing.
+
+Quotes from: https://www.positivityblog.com/
 
 ## To keep in mind.
 
