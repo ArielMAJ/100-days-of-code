@@ -13,14 +13,13 @@ amount_of_questions = 5
 # r = requests.get(url)
  #,headers=headers,data=data)
 
-token = "40f85196d7c572b414fbc13500af2eede5e282592327e8ff729e715dd06c85c0"
-url = f'https://opentdb.com/api.php?amount={amount_of_questions}&type=boolean&token={token}'
+url = f'https://opentdb.com/api.php?amount={amount_of_questions}&type=boolean'
 response = requests.get(url)
 response_json = response.json()
 
 
 if response_json['response_code']!=0:
-    reset_url = f"https://opentdb.com/api_token.php?command=reset&token={token}"
+    reset_url = f"https://opentdb.com/api_token.php?command=reset"
     new_response = requests.get(reset_url)
     print(new_response,new_response.text)
     response_json = requests.get(url).json()
