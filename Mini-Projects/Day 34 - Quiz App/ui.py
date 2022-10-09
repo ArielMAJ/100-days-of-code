@@ -2,6 +2,7 @@
 UI
 """
 import tkinter as tk
+from tkinter import messagebox
 import customtkinter as ctk  # type: ignore[import]
 from PIL import Image, ImageTk  # type: ignore[import]
 
@@ -14,15 +15,21 @@ class MainWindow(ctk.CTk):
     App's main window class.
     """
 
-    def __init__(self):
+    def __init__(self, quiz=None):
         super().__init__()
         self.widgets: dict = {}
         self.images: dict = {}
 
         self.var_score = tk.StringVar()
         self.current_question = tk.StringVar()
-        self.current_question.set("This isn't a question yet.")
-        self.score = -1
+        self.quiz = quiz
+
+        if self.quiz is not None and quiz.still_has_questions():
+            self.quiz.next_question()
+            self.current_question.set(self.quiz.current_question.text)
+            self._update_score()
+        else:
+            self.current_question.set("This isn't a question yet.")
 
         self.images["true"] = ImageTk.PhotoImage(Image.open("images/true.png"))
         self.images["false"] = ImageTk.PhotoImage(Image.open("images/false.png"))
@@ -32,11 +39,14 @@ class MainWindow(ctk.CTk):
         self.resizable(False, False)
 
         self._place_widgets()
-        self._update_score()
 
     def _update_score(self):
-        self.score += 1
-        self.var_score.set(f"Score: {self.score}")
+        if self.quiz is not None:
+            score = self.quiz.score
+        else:
+            score = 0
+
+        self.var_score.set(f"Score: {score}")
 
     def _place_widgets(self):
 
@@ -86,7 +96,7 @@ class MainWindow(ctk.CTk):
             width=0,
             image=self.images["true"],
             fg_color=None,
-            command=lambda: print("True"),
+            command=lambda: self._button_click(True),
         )
         self.widgets["btn_true"].grid(
             row=3,
@@ -100,7 +110,7 @@ class MainWindow(ctk.CTk):
             width=0,
             image=self.images["false"],
             fg_color=None,
-            command=lambda: print("False"),
+            command=lambda: self._button_click(False),
         )
         self.widgets["btn_false"].grid(
             row=3,
@@ -108,6 +118,25 @@ class MainWindow(ctk.CTk):
             pady=20,
             padx=30,
         )
+
+    def _button_click(self, answer):
+        if self.quiz is None:
+            print(answer)
+            return
+
+        self.quiz.answer_is_correct(answer)
+        self._update_score()
+        if self.quiz.still_has_questions():
+            self.quiz.next_question()
+            self.current_question.set(self.quiz.current_question.text)
+        else:
+            messagebox.showinfo(
+                parent=self,
+                title="Done",
+                message="You've completed the quiz!\n"
+                + f"Your final score is: {self.quiz.score}/{self.quiz.question_number}\n",
+            )
+            self.destroy()
 
 
 def main():

@@ -15,37 +15,51 @@ class QuizBrain:
         self.question_number = 0
         self.score = 0
         self.questions_bank = []
+        self.current_question = "This isn't a question yet."
 
         self.update_questions_bank(amount_of_questions)
 
-    def still_has_questions(self):
+    def still_has_questions(self) -> bool:
         """
         Checks if there are still questions left.
         """
         return self.question_number < len(self.questions_bank)
 
-    def next_question(self):
+    def next_question(self) -> None:
         """
-        Asks the next question.
+        "Prepares" the next question.
         """
-        current_question = self.questions_bank[self.question_number]
+        self.current_question = self.questions_bank[self.question_number]
         self.question_number += 1
+
+    def ask_next_question_cmd(self) -> None:
+        """
+        Asks the next question on cmd.
+        """
+        self.next_question()
 
         print("**************************************************")
         user_answer = int(
-            input(f"Q.{self.question_number}: {current_question.text} [1/0]: ")
+            input(f"Q.{self.question_number}: {self.current_question.text} [1/0]: ")
         )
-        self.check_answer(user_answer, current_question.answer)
+        self.check_answer_cmd(user_answer)
 
+    def answer_is_correct(self, user_answer) -> bool:
+        """
+        Checks whether the answer was correct.
+        """
+        if user_answer == (self.current_question.answer.lower() == "true"):
+            self.score += 1
+            return True
+        return False
 
-    def check_answer(self, user_answer, actual_answer):
+    def check_answer_cmd(self, user_answer) -> None:
         """
         Checks and prints whether the answer was correct.
         """
-        print("The correct answer was:", actual_answer)
-        if user_answer == (actual_answer.lower() == "true"):
+        print("The correct answer was:", self.current_question.answer)
+        if self.answer_is_correct(user_answer):
             print("You're right!")
-            self.score += 1
         else:
             print("That's wrong")
         print(f"Your current score is {self.score}/{self.question_number}\n")
@@ -67,12 +81,12 @@ class QuizBrain:
             for question in trivia_data
         ]
 
-    def start(self) -> None:
+    def start_cmd_quiz(self) -> None:
         """
         After creating the class, this function should be called to start the quiz.
         """
         while self.still_has_questions():
-            self.next_question()
+            self.ask_next_question_cmd()
 
         print(
             "-------------------------------------------------\n"

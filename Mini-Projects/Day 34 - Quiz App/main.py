@@ -3,6 +3,7 @@ Day 34 - Quiz game entry point.
 """
 
 from quiz_brain import QuizBrain
+from ui import MainWindow
 
 
 def main() -> int:
@@ -10,7 +11,10 @@ def main() -> int:
     Main function.
     """
     quiz = QuizBrain()
-    quiz.start()
+    # quiz.start_cmd_quiz()
+
+    root = MainWindow(quiz)
+    root.mainloop()
 
     return 0
 
