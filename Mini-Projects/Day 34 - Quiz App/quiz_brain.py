@@ -11,11 +11,11 @@ class QuizBrain:
     QuizBrain class. This handles most of the game.
     """
 
-    def __init__(self, amount_of_questions=5):
-        self.question_number = 0
-        self.score = 0
-        self.questions_bank = []
-        self.current_question = "This isn't a question yet."
+    def __init__(self, amount_of_questions: int = 5):
+        self.question_number: int = 0
+        self.score: int = 0
+        self.questions_bank: list[Question]
+        self.current_question: Question
 
         self.update_questions_bank(amount_of_questions)
 
@@ -39,12 +39,12 @@ class QuizBrain:
         self.next_question()
 
         print("**************************************************")
-        user_answer = int(
+        user_answer: int = int(
             input(f"Q.{self.question_number}: {self.current_question.text} [1/0]: ")
         )
         self.check_answer_cmd(user_answer)
 
-    def answer_is_correct(self, user_answer) -> bool:
+    def answer_is_correct(self, user_answer: int) -> bool:
         """
         Checks whether the answer was correct.
         """
@@ -53,7 +53,7 @@ class QuizBrain:
             return True
         return False
 
-    def check_answer_cmd(self, user_answer) -> None:
+    def check_answer_cmd(self, user_answer: int) -> None:
         """
         Checks and prints whether the answer was correct.
         """
@@ -64,7 +64,7 @@ class QuizBrain:
             print("That's wrong")
         print(f"Your current score is {self.score}/{self.question_number}\n")
 
-    def update_questions_bank(self, amount_of_questions) -> None:
+    def update_questions_bank(self, amount_of_questions: int) -> None:
         """
         This function will get the quiz questions online and return a list of questions
         as a Question class.

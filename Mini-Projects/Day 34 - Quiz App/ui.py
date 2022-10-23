@@ -120,23 +120,37 @@ class MainWindow(ctk.CTk):
         )
 
     def _button_click(self, answer):
+        def next_question():
+            self.frame.configure(fg_color="gray16")
+            # self.widgets["btn_true"].configure(state="enabled")
+            # self.widgets["btn_false"].configure(state="enabled")
+
+            if self.quiz.still_has_questions():
+                self.quiz.next_question()
+                self.current_question.set(self.quiz.current_question.text)
+            else:
+                messagebox.showinfo(
+                    parent=self,
+                    title="Done",
+                    message="You've completed the quiz!\n"
+                    + f"Your final score is: {self.quiz.score}/{self.quiz.question_number}\n",
+                )
+                self.destroy()
+
+        # self.widgets["btn_true"].configure(state="disabled")
+        # self.widgets["btn_false"].configure(state="disabled")
+
         if self.quiz is None:
-            print(answer)
+            # print(answer)
             return
 
-        self.quiz.answer_is_correct(answer)
-        self._update_score()
-        if self.quiz.still_has_questions():
-            self.quiz.next_question()
-            self.current_question.set(self.quiz.current_question.text)
+        if self.quiz.answer_is_correct(answer):
+            self._update_score()
+            self.frame.configure(fg_color="green")
         else:
-            messagebox.showinfo(
-                parent=self,
-                title="Done",
-                message="You've completed the quiz!\n"
-                + f"Your final score is: {self.quiz.score}/{self.quiz.question_number}\n",
-            )
-            self.destroy()
+            self.frame.configure(fg_color="red")
+
+        self.after(1000, next_question)
 
 
 def main():
