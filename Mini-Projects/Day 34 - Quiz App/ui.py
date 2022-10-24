@@ -122,8 +122,8 @@ class MainWindow(ctk.CTk):
     def _button_click(self, answer):
         def next_question():
             self.frame.configure(fg_color="gray16")
-            # self.widgets["btn_true"].configure(state="enabled")
-            # self.widgets["btn_false"].configure(state="enabled")
+            self.widgets["btn_true"].configure(state="normal")
+            self.widgets["btn_false"].configure(state="normal")
 
             if self.quiz.still_has_questions():
                 self.quiz.next_question()
@@ -137,8 +137,8 @@ class MainWindow(ctk.CTk):
                 )
                 self.destroy()
 
-        # self.widgets["btn_true"].configure(state="disabled")
-        # self.widgets["btn_false"].configure(state="disabled")
+        self.widgets["btn_true"].configure(state="disabled")
+        self.widgets["btn_false"].configure(state="disabled")
 
         if self.quiz is None:
             # print(answer)
@@ -155,7 +155,7 @@ class MainWindow(ctk.CTk):
 
 def main():
     """
-    Main function for easily running the app.
+    Main function for easily running and testing the "imcomplete" app.
     """
     root = MainWindow()
     root.mainloop()
