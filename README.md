@@ -1,4 +1,4 @@
-# 100 Days of Code:  The Complete Python Pro Bootcamp for 2022
+# 100 Days of Code: The Complete Python Bootcamp
 
 My solutions/projects in the 100 days of code challenge course. 
 
